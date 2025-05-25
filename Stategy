@@ -1,0 +1,81 @@
+🎯 Step-by-Step Strategy for Most Effective DSA Preparation
+🔥 Goal: Crack OA + Interviews with Confidence
+Timeframe: 1.5 months
+Target: Quality > Quantity
+Focus: Pattern recognition + real interview-level readiness
+
+📍 Phase 1 (Week 1-2): Foundation & Weak Area Fixing
+✅ Step 1: Revisit your 80 LeetCode problems
+Go back to unsolved or partially solved problems
+
+For each, ask:
+
+Did I understand the logic?
+
+Can I write it from scratch now?
+
+What pattern was used (sliding window, prefix sum, etc.)?
+
+Re-solve 20–30 of them from scratch without peeking.
+
+✅ Step 2: Focused Topic-Wise Practice
+Start Striver’s SDE Sheet or NeetCode 150 and go topic-by-topic:
+
+Week	Topic	# Problems	Key Patterns
+1	Arrays + Prefix + Sliding Window	15–20	Two pointer, hash, prefix sum
+2	HashMaps + Strings + Stack/Queue	20	Hashing, monotonic stack, queue
+
+👉 After every problem: write a note in your tracker:
+
+Time + Space complexity
+
+Core idea/pattern
+
+If stuck → solve similar 2 problems to reinforce
+
+📍 Phase 2 (Week 3-5): Build Pattern Recognition & Speed
+✅ Step 3: Shift from topic to mixed practice
+Start solving LeetCode Daily + 2 mixed random problems
+
+Use Blind 75 or Top Interview 150 as base
+
+Solve under time pressure → simulate OAs
+
+🧠 Focus now:
+
+Can I map the problem to a known pattern in <3 mins?
+
+📌 Use this pattern-to-problem map:
+
+Pattern	Example Problems
+Sliding window	LC 3, 76
+Two pointers	LC 11, 15
+Binary search	LC 33, 34
+Greedy	LC 55, 45
+Recursion/backtracking	LC 39, 46
+DP	LC 70, 322, 198
+Graph	LC 200, 133, 207
+
+📍 Phase 3 (Final Week): Mock + Revision + Debugging Mindset
+✅ Step 4: Simulate real OAs
+Use LeetCode Weekly/Contest archives
+
+Set a timer: 90 mins / 3 problems
+
+Analyze after every test: Why did I fail this one?
+
+📘 Keep a “mistake diary” with:
+
+Problem link
+
+What went wrong (logic, edge case, syntax)
+
+Fix/lesson
+
+✅ Step 5: Revise Patterns & Edge Cases
+Revisit your notes
+
+Redo 20–30 key problems fast (without editor)
+
+Practice dry running / debugging on paper
+
