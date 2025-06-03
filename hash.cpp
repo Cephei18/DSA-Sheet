@@ -4,8 +4,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-
-// Function to check if there are any duplicate elements in the vector
+// Problem: Contains Duplicate
+// LeetCode: https://leetcode.com/problems/contains-duplicate/
 
 class Solution {
 public:
@@ -21,4 +21,50 @@ public:
    }
    return false;
 }
+};
+
+// Problem: Valid Anagram
+// LeetCode: https://leetcode.com/problems/valid-anagram/
+
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+
+        if (s.length() != t.length()) return false;
+
+        unordered_map<char,int> s1;
+        unordered_map<char,int> t1;
+
+        for(char i : s){
+          s1[i]++;
+        }
+        for(char j:t){
+            t1[j]++;
+        }
+        return s1 == t1;
+    }
+};
+
+// Approach 2 - This trick only works when you know the characters are lowercase English letters. 
+//If input can contain uppercase or Unicode, you'll need a more flexible method (like a map or unordered_map<char, int>).
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if (s.length() != t.length()) return false;
+
+        int count[26] = {0};
+
+        for (int i = 0; i < s.length(); ++i) {
+            count[s[i] - 'a']++;
+            count[t[i] - 'a']--;
+        }
+
+        for (int i = 0; i < 26; ++i) {
+            if (count[i] != 0) return false;
+        }
+
+        return true;
+    }
 };
