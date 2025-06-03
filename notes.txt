@@ -1,0 +1,31 @@
+You use: TRICK 1
+
+int index = ch - 'a';
+to convert a character like 'a' to 'z' into an index from 0 to 25.
+
+Why? So you can use an array of size 26 to store frequencies, counts, or flags — all without unordered_map overhead.
+
+🎯 Why It Works
+Characters in C++ are just numbers (ASCII values):
+
+Character	ASCII Code	'char' - 'a'
+'a'	97	0
+'b'	98	1
+'c'	99	2
+...	...	...
+'z'	122	25
+
+So when you write ch - 'a', you're doing:
+
+ASCII of ch - ASCII of 'a'
+e.g., 'c' - 'a' = 99 - 97 = 2.
+
+🧪 Practice Example: Count Letters
+👇 Problem: Count frequency of each letter in a string
+
+string s = "apple";
+int count[26] = {0};  // 0-based array for a-z
+
+for (char ch : s) {
+    count[ch - 'a']++;
+}
