@@ -58,3 +58,33 @@ public:
     }
 };
 
+
+// Problem: Valid Palindrome
+// LeetCode: https://leetcode.com/problems/valid-palindrome/
+
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        // Convert to lowercase
+        for (char& c : s) {
+            c = tolower(c);
+        }
+
+        // Remove non-alphanumeric characters
+        s.erase(remove_if(s.begin(), s.end(), [](char c) {
+            return !isalnum(static_cast<unsigned char>(c));
+        }), s.end());
+
+        // Two-pointer check for palindrome
+        int i = 0;
+        int j = s.length() - 1;
+
+        while (i <= j) {
+            if (s[i] != s[j]) return false;
+            i++;
+            j--;
+        }
+
+        return true;
+    }
+};

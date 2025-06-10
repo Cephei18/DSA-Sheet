@@ -86,3 +86,72 @@ public:
         return copy;
     }
 };
+
+// Problem: Pacific Atlantic Water Flow
+// LeetCode: https://leetcode.com/problems/pacific-atlantic-water-flow/
+
+
+class Solution {
+public:
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+    if(heights.empty() || heights[0].empty()) return {};
+
+     int rows = heights.size();
+     int cols = heights[0].size();
+
+     vector<vector<bool>>pacific(rows,vector<bool>(cols,false));
+     vector<vector<bool>>atlantic(rows,vector<bool>(cols,false));
+
+     for (int c = 0; c < cols; ++c) {
+     dfs(0, c, pacific, heights, heights[0][c]); // Top row
+     }
+     for (int r = 0; r < rows; ++r) {
+      dfs(r, 0, pacific, heights, heights[r][0]); // Left column
+    }
+     for (int c = 0; c < cols; ++c) {
+     dfs(rows - 1, c, atlantic, heights, heights[rows - 1][c]); // Bottom row
+    }
+     for (int r = 0; r < rows; ++r) {
+    dfs(r, cols - 1, atlantic, heights, heights[r][cols - 1]); // Right column
+    }
+
+    vector<vector<int>> result;
+    for (int r = 0; r < rows; ++r) {
+    for (int c = 0; c < cols; ++c) {
+        if (pacific[r][c] && atlantic[r][c]) {
+            result.push_back({r, c});
+        }
+    }
+}
+return result;
+
+ 
+    }
+     void dfs(int r,int c, vector<vector<bool>>& visited,
+      vector<vector<int>>& heights, int prevHeight){
+       
+      if(r<0 || c<0 || r >= heights.size() ||
+      c>= heights[0].size()) return;
+      
+    // Already visited
+    if (visited[r][c]) return;
+
+    // Height check — water can only flow from high to low or same
+    if (heights[r][c] < prevHeight) return;
+
+    // Mark as visited
+    visited[r][c] = true;
+
+      int dirn [4][2] = {
+        {1,0},{-1,0},{0,1},{0,-1}
+      };
+      for( int i=0;i<4;i++){
+        int NewR= r + dirn[i][0];
+        int NewC = c + dirn[i][1];
+        dfs(NewR, NewC, visited, heights, heights[r][c]);
+      }
+      
+
+     }
+
+};
