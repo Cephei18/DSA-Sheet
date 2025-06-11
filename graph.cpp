@@ -155,3 +155,67 @@ return result;
      }
 
 };
+
+// Problem: Island Perimeter
+// LeetCode: https://leetcode.com/problems/island-perimeter/
+
+class Solution {
+public:
+    int islandPerimeter(vector<vector<int>>& grid) {
+        if(grid.empty() || grid[0].empty()) return 0;
+
+        int rows = grid.size();
+        int cols = grid[0].size();
+
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < cols; j++) {
+                if(grid[i][j] == 1) {
+                    return dfs(i, j, grid); // ✅ fix here
+                }
+            }
+        }
+        return 0;
+    }
+
+    int dfs(int r, int c, vector<vector<int>>& grid) {
+        // ✅ If out of bounds or water, contributes to perimeter
+        if(r < 0 || c < 0 || r >= grid.size() || c >= grid[0].size() || grid[r][c] == 0) {
+            return 1;
+        }
+
+        // ✅ If already visited, don’t count again
+        if(grid[r][c] == -1) return 0;
+
+        // ✅ Mark as visited
+        grid[r][c] = -1;
+
+        // Explore all 4 directions and sum the perimeter
+        return dfs(r + 1, c, grid) +
+               dfs(r - 1, c, grid) +
+               dfs(r, c + 1, grid) +
+               dfs(r, c - 1, grid);
+    }
+};
+
+//approach 2
+class Solution {
+public:
+    int islandPerimeter(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        int res = 0;
+        for (int r = 0; r < m; r++) {
+            for (int c = 0; c < n; c++) {
+                if (grid[r][c]) {
+                    res += 4;
+                    if (r && grid[r - 1][c]) {
+                        res -= 2;
+                    }
+                    if (c && grid[r][c - 1]) {
+                        res -= 2;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};
