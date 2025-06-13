@@ -219,3 +219,95 @@ public:
         return res;
     }
 };
+
+// Problem: Max Area of Island
+// LeetCode: https://leetcode.com/problems/max-area-of-island
+
+class Solution {
+public:
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        if(grid.empty() || grid[0].empty())return 0;
+
+        int r = grid.size();
+        int c = grid[0].size();
+
+        int Marea = 0;
+
+        for(int i=0;i<r;++i){
+            for(int j=0;j<c;++j){
+                if(grid[i][j]==1){
+                    int area = dfs(i,j,grid);
+                    Marea = max(Marea,area);
+                }
+                
+            }
+        }
+        return Marea;
+        
+    }
+    int dfs(int r, int c, vector<vector<int>>& grid) {
+    if (r < 0 || c < 0 || r >= grid.size() || c >= grid[0].size() || grid[r][c] != 1)
+        return 0;
+
+    grid[r][c] = -1; // mark visited
+    int area = 1;
+
+    // Directions: up, down, left, right
+    int dirn[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
+    for (int i = 0; i < 4; i++) {
+        int newR = r + dirn[i][0];
+        int newC = c + dirn[i][1];
+        area += dfs(newR, newC, grid);
+    }
+
+    return area;
+}
+
+};
+
+// Problem: Find the Maximum Number of Fish in a Pond
+// LeetCode: https://leetcode.com/problems/find-the-maximum-number-of-fish-in-a-pond/
+
+class Solution {
+public:
+    int findMaxFish(vector<vector<int>>& grid) {
+
+        if(grid.empty() || grid[0].empty())return 0;
+
+        int r = grid.size();
+        int c = grid[0].size();
+
+        int MaxF = 0;
+
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                if(grid[i][j]!=0){
+                    int currentF = dfs(i,j,grid);
+                    MaxF = max(MaxF,currentF);
+                }
+            }
+        }
+        return MaxF;
+        
+    }
+    int dfs(int r, int c,vector<vector<int>>& grid){
+        if(r<0 || c< 0|| r>= grid.size() || c>= grid[0].size()|| 
+        grid[r][c] == 0) return 0;
+
+        int Fish = grid[r][c];
+
+         grid[r][c] = 0;
+
+        int dirn[4][2] = {
+            {1,0},{-1,0},{0,1},{0,-1}
+        };
+
+        for(int i=0;i<4;i++){
+            int NewR = r+ dirn[i][0];
+            int NewC = c + dirn[i][1];
+            Fish+= dfs(NewR,NewC,grid);
+        }
+
+        return Fish;
+    }
+};
