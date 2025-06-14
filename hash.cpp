@@ -230,3 +230,62 @@ public:
         return -1;
     }
 };
+
+// Problem: Valid Sudoku
+// LeetCode: https://leetcode.com/problems/valid-sudoku/
+
+class Solution
+{
+public:
+    bool isValidSudoku(vector<vector<char>> &board)
+    {
+
+        for (int i = 0; i < 9; ++i)
+        {
+            unordered_set<char> row_set;
+            for (int j = 0; j < 9; ++j)
+            {
+                char r_val = board[i][j];
+                if (r_val == '.')
+                    continue;
+                if (row_set.count(r_val))
+                    return false;
+                row_set.insert(r_val);
+            }
+        }
+        for (int i = 0; i < 9; ++i)
+        {
+            unordered_set<char> col_set;
+            for (int j = 0; j < 9; ++j)
+            {
+                char c_val = board[j][i];
+                if (c_val == '.')
+                    continue;
+                if (col_set.count(c_val))
+                    return false;
+                col_set.insert(c_val);
+            }
+        }
+        for (int boxRow = 0; boxRow < 9; boxRow += 3)
+        {
+            for (int boxCol = 0; boxCol < 9; boxCol += 3)
+            {
+                unordered_set<char> box_set;
+                for (int i = 0; i < 3; ++i)
+                {
+                    for (int j = 0; j < 3; ++j)
+                    {
+                        char val = board[boxRow + i][boxCol + j];
+                        if (val == '.')
+                            continue;
+                        if (box_set.count(val))
+                            return false;
+                        box_set.insert(val);
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+};
