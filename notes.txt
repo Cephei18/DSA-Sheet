@@ -29,3 +29,92 @@ int count[26] = {0};  // 0-based array for a-z
 for (char ch : s) {
     count[ch - 'a']++;
 }
+
+
+///// TWO Pointers - pattern
+
+✅ Pattern 1: Two Pointers with Max Tracking (Water Trapping Type)
+Used when decisions depend on previous maximums (like rainwater boundaries or container walls).
+
+🔹 Typical Use-Cases:
+Trapping Rain Water
+
+Container With Most Water
+
+Max Area Island (with slight BFS/DFS)
+
+Valid Mountain Array
+
+🔹 Pattern:
+Move left/right based on which side has a smaller value.
+
+Maintain leftMax and rightMax to compute trapped water or bounded values.
+
+🔹 Key Insight:
+👉 You can’t just compare current bars, because water depends on max boundaries on both sides.
+
+while (l < r) {
+    if (height[l] < height[r]) {
+        if (height[l] >= leftMax)
+            leftMax = height[l];
+        else
+            water += leftMax - height[l];
+        l++;
+    } else {
+        if (height[r] >= rightMax)
+            rightMax = height[r];
+        else
+            water += rightMax - height[r];
+        r--;
+    }
+}
+
+✅ Pattern 2: Simple Two-Pointer Scan (No Max Needed)
+Used when you're just looking for pairs, sums, or movement without requiring history.
+
+🔹 Typical Use-Cases:
+Two Sum II (sorted array)
+
+Valid Palindrome
+
+Merge Two Sorted Arrays
+
+Reverse Vowels of a String
+
+Remove Duplicates
+
+🔹 Pattern:
+Compare values at l and r, move one or both pointers based on condition.
+
+No need to track max/min values.
+
+while (l < r) {
+    int sum = numbers[l] + numbers[r];
+    if (sum > target) r--;
+    else if (sum < target) l++;
+    else return {l + 1, r + 1};
+}
+
+
+Start
+  |
+  v
+Do you need to compare/start from both ends of an array?
+  |
+  +--> Yes
+  |     |
+  |     v
+  |   Does the result depend on the MAX or BOUNDARY from past values?
+  |     |
+  |     +--> Yes → Use **Two Pointers + Max Tracking**
+  |     |
+  |     +--> No  → Use **Simple Two Pointers**
+  |
+  +--> No
+        |
+        v
+     Are you scanning or adjusting a range/window (subarray)?
+        |
+        +--> Yes → Use **Sliding Window** or **Two Pointer Window**
+        |
+        +--> No  → Likely **Linear or Brute Force**
