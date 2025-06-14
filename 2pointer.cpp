@@ -88,3 +88,28 @@ public:
         return true;
     }
 };
+
+// Problem: Container With Most Water
+// LeetCode: https://leetcode.com/problems/container-with-most-water/
+
+
+class Solution {
+public:
+    int maxArea(vector<int>& heights) {
+         
+        int l = 0;
+        int r = heights.size()-1;
+        int maxA = 0;
+        while(l<r){
+         int area = (r-l) * min(heights[l],heights[r]);
+         maxA = max(area,maxA);
+           if (heights[l] < heights[r]) {
+                l++;
+            } else {
+                r--;
+            }
+        }
+        return maxA;
+
+    }
+};
