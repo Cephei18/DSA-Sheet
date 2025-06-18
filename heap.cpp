@@ -57,3 +57,33 @@ public:
         return res;
     }
 };
+
+// Problem: Top K Frequent Elements (Using Bucket Sort Approach)
+// LeetCode: https://leetcode.com/problems/top-k-frequent-elements/
+
+
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> count;
+        for (int n : nums) {
+            count[n]++;
+        }
+
+        vector<vector<int>> buckets(nums.size() + 1);
+        for (const auto& entry : count) {
+            buckets[entry.second].push_back(entry.first);
+        }
+
+        vector<int> res;
+        for (int i = buckets.size() - 1; i >= 0 && res.size() < k; --i) {
+            for (int n : buckets[i]) {
+                res.push_back(n);
+                if (res.size() == k) {
+                    return res;
+                }
+            }
+        }
+        return res;
+    }
+};
