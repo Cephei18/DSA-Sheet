@@ -290,3 +290,21 @@ public:
         return (minL == INT_MAX) ? 0 : minL;
     }
 };
+
+// Problem: Maximum Subarray
+// LeetCode: https://leetcode.com/problems/maximum-subarray/
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int maxSub = nums[0], curSum = 0;
+        for (int num : nums) {
+            if (curSum < 0) {
+                curSum = 0;
+            }
+            curSum += num;
+            maxSub = max(maxSub, curSum);
+        }
+        return maxSub;
+    }
+};
