@@ -115,3 +115,33 @@ public:
 
     }
 };
+
+// Problem: Maximum Depth of Binary Tree
+// LeetCode: https://leetcode.com/problems/maximum-depth-of-binary-tree/
+
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {
+        if (!root){
+            return 0;
+        }
+        return 1+ max(maxDepth(root->left),maxDepth(root->right));
+    }
+};
+
+// Problem: Same Tree
+// LeetCode: https://leetcode.com/problems/same-tree/
+
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(!p && !q) return true;
+
+        if(p && q && p->val_ == q->val_){
+            return isSameTree(p->left,q->left) && 
+             isSameTree(p->right,q->right) ;
+        }
+        else{ return false;}
+        
+    }
+};
