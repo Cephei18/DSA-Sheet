@@ -353,3 +353,41 @@ public:
         return resLen == INT_MAX ? "" : s.substr(res.first, resLen);
     }
 };
+
+// Problem: Longest Palindromic Substring
+// LeetCode: https://leetcode.com/problems/longest-palindromic-substring
+
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int resIdx = 0;
+        int resLen = 0;
+        //ODD
+        for(int i=0;i<s.size();i++){
+           int l=i ;
+           int r = i;
+           while(l>=0 && r<s.size() && s[l]==s[r]){
+            if(r-l+1 > resLen){
+                resIdx = l;
+                resLen = r-l+1;
+            }
+            l--;
+            r++;
+           }
+
+           //EVEN
+           l = i;
+           r = i+1;
+           while(l>=0 && r<s.size() && s[l]==s[r]){
+            if(r-l+1 > resLen){
+                resIdx = l;
+                resLen = r-l+1;
+            }
+            l--;
+            r++;
+           }
+           
+    }
+    return s.substr(resIdx,resLen);
+    }
+};
