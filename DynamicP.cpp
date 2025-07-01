@@ -185,4 +185,47 @@ public:
         }
     }
 
-    
+// Problem: Word Break
+// LeetCode: https://leetcode.com/problems/word-break/
+
+    class Solution {
+    public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        vector<bool> dp(s.size() + 1, false);
+        dp[s.size()] = true;
+
+        for (int i = s.size() - 1; i >= 0; i--) {
+            for (const auto& w : wordDict) {
+                if ((i + w.size()) <= s.size() && 
+                     s.substr(i, w.size()) == w) {
+                    dp[i] = dp[i + w.size()];
+                }
+                if (dp[i]) {
+                    break;
+                }
+            }
+        }
+
+        return dp[0];
+    }
+};
+
+
+//Problem: Maximum Product Subarray
+// LeetCode: https://leetcode.com/problems/maximum-product-subarray/
+
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int res = nums[0];
+        int curMin = 1, curMax = 1;
+
+        for (int num : nums) {
+            int tmp = curMax * num;
+            curMax = max(max(num * curMax, num * curMin), num);
+            curMin = min(min(tmp, num * curMin), num);
+            res = max(res, curMax);
+        }
+        return res;
+    }
+};
