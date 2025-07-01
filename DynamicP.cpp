@@ -170,3 +170,19 @@ public:
         return dp1;
     }
 };
+
+// Problem: Number of Ways to Reach a Score
+// LeetCode: https://leetcode.com/problems/number-of-ways-to-reach-a-score/
+
+  vector<int> dp(n + 1);
+    dp[0] = 1; // base case
+
+    for (int i = 1; i <= n; ++i) {
+        for (int dice = 1; dice <= 6; ++dice) {
+            if (i - dice >= 0) {
+                dp[i] = (dp[i] + dp[i - dice]) % MOD;
+            }
+        }
+    }
+
+    
