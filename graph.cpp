@@ -733,3 +733,49 @@ public:
         return shortest;
     }
 };
+
+// Problem: Word Search
+// LeetCode: https://leetcode.com/problems/word-search/
+
+class Solution {
+public:
+    bool exist(vector<vector<char>>& board, string word) {
+        if (board.empty() || board[0].empty()) return false;
+
+        int rows = board.size();
+        int cols = board[0].size();
+
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                if (dfs(board, word, i, j, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    bool dfs(vector<vector<char>>& board, string& word, int r, int c, int index) {
+        if (index == word.size()) return true;
+
+        if (r < 0 || c < 0 || r >= board.size() || c >= board[0].size() ||
+            board[r][c] != word[index]) {
+            return false;
+        }
+
+        char temp = board[r][c];
+        board[r][c] = '#';  // Mark as visited
+
+        int dirn[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        for (int k = 0; k < 4; ++k) {
+            int newR = r + dirn[k][0];
+            int newC = c + dirn[k][1];
+            if (dfs(board, word, newR, newC, index + 1)) {
+                return true;
+            }
+        }
+
+        board[r][c] = temp;  // Backtrack
+        return false;
+    }
+};
