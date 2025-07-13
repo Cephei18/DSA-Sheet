@@ -266,3 +266,80 @@ public:
         return goal == 0;
     }
 };
+
+// Problem: 0/1 Knapsack Problem
+// LeetCode: https://leetcode.com/problems/0-1-knapsack-problem/
+
+// Memory optimized Dynamic Programming Solution
+// Time: O(n * m), Space: O(m)
+int optimizedDp(vector<int>& profit, vector<int>& weight, int capacity) {
+    int N = profit.size(), M = capacity;
+    vector<int> dp(M + 1, 0);
+
+    // Fill the first row to reduce edge cases
+    for (int c = 0; c <= M; c++) {
+        if (weight[0] <= c) {
+            dp[c] = profit[0];
+        } 
+    }
+
+    for (int i = 1; i < N; i++) {
+        vector<int> curRow(M + 1, 0);
+        for (int c = 1; c <= M; c++) {
+            int skip = dp[c];
+            int include = 0;
+            if (c - weight[i] >= 0) {
+                include = profit[i] + dp[c - weight[i]];
+            }
+            curRow[c] = max(include, skip);
+        }
+        dp = curRow;
+    }
+    return dp[M];
+}
+
+// Problem: Partition Equal Subset Sum
+// LeetCode: https://leetcode.com/problems/partition-equal-subset-sum/
+
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int sum = 0;
+        for(int i=0;i<nums.size();i++){
+            sum+=nums[i];
+        }
+        if(sum%2 != 0) return false;
+        int target = sum/2;
+        vector<bool> dp(target+1,false);
+
+        dp[0] = true;
+        for(int i=0;i<nums.size();i++){
+            for(int j=target; j>= nums[i];j--){
+                dp[j] = dp[j] || dp[j-nums[i]];
+            }
+        }
+        return dp[target];
+    }
+};
+
+// Problem: Target Sum
+// LeetCode: https://leetcode.com/problems/target-sum/
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& nums, int target) {
+        unordered_map<int, int> dp;
+        dp[0] = 1;
+
+        for (int num : nums) {
+            unordered_map<int, int> nextDp;
+            for (auto& entry : dp) {
+                int total = entry.first;
+                int count = entry.second;
+                nextDp[total + num] += count;
+                nextDp[total - num] += count;
+            }
+            dp = nextDp;
+        }
+        return dp[target];
+    }
+};
