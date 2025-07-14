@@ -343,3 +343,31 @@ public:
         return dp[target];
     }
 };
+
+// Problem: Find Maximum Number of Strings That Can Be Formed
+// LeetCode: https://leetcode.com/problems/find-maximum-number-of-strings-that-can-be-formed/
+
+class Solution {
+public:
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        vector<vector<int>> arr(strs.size(), vector<int>(2));
+        for (int i = 0; i < strs.size(); i++) {
+            for (char c : strs[i]) {
+                arr[i][c - '0']++;
+            }
+        }
+
+        vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+
+        for (const auto& pair : arr) {
+            int zeros = pair[0], ones = pair[1];
+            for (int j = m; j >= zeros; j--) {
+                for (int k = n; k >= ones; k--) {
+                    dp[j][k] = max(dp[j][k], 1 + dp[j - zeros][k - ones]);
+                }
+            }
+        }
+
+        return dp[m][n];
+    }
+};
