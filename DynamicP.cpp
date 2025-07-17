@@ -387,3 +387,42 @@ public:
     }
 };
 
+// Problem: Last Stone Weight II
+// LeetCode: https://leetcode.com/problems/last-stone-weight-ii/
+
+class Solution {
+public:
+    int lastStoneWeightII(vector<int>& stones) {
+        int stoneSum = accumulate(stones.begin(), stones.end(), 0);
+        int target = (stoneSum + 1) / 2;
+        return dfs(0, 0, stones, stoneSum, target);
+    }
+
+private:
+    int dfs(int i, int total, const vector<int>& stones, int stoneSum, int target) {
+        if (total >= target || i == stones.size()) {
+            return abs(total - (stoneSum - total));
+        }
+        return min(
+            dfs(i + 1, total, stones, stoneSum, target),
+            dfs(i + 1, total + stones[i], stones, stoneSum, target)
+        );
+    }
+};
+
+class Solution {
+public:
+    int lastStoneWeightII(vector<int>& stones) {
+        int stoneSum = accumulate(stones.begin(), stones.end(), 0);
+        int target = stoneSum / 2;
+        vector<int> dp(target + 1, 0);
+
+        for (int stone : stones) {
+            for (int t = target; t >= stone; t--) {
+                dp[t] = max(dp[t], dp[t - stone] + stone);
+            }
+        }
+
+        return stoneSum - 2 * dp[target];
+    }
+};
