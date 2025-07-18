@@ -426,3 +426,24 @@ public:
         return stoneSum - 2 * dp[target];
     }
 };
+
+class Solution {
+public:
+    int lastStoneWeightII(vector<int>& stones) {
+        int stoneSum = accumulate(stones.begin(), stones.end(), 0);
+        int target = stoneSum / 2;        
+        bitset<3001> dp;
+        dp[0] = true;
+        
+        for (int stone : stones) {
+            dp |= (dp << stone);
+        }
+        
+        for (int t = target; t >= 0; --t) {
+            if (dp[t]) {
+                return stoneSum - 2 * t;
+            }
+        }
+        return 0;
+    }
+};
