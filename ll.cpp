@@ -146,3 +146,70 @@ public:
         return false;
     }
 };
+
+// Problem: Reorder List
+// LeetCode: https://leetcode.com/problems/reorder-list/
+
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+        if (!head || !head->next) return;
+
+        // Step 1: Find middle of the list
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while (fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        // Step 2: Reverse the second half
+        ListNode* second = slow->next;
+        slow->next = nullptr;
+        ListNode* prev = nullptr;
+        while (second) {
+            ListNode* tmp = second->next;
+            second->next = prev;
+            prev = second;
+            second = tmp;
+        }
+
+        // Step 3: Merge two halves
+        ListNode* first = head;
+        second = prev;
+        while (second) {
+            ListNode* tmp1 = first->next;
+            ListNode* tmp2 = second->next;
+            first->next = second;
+            second->next = tmp1;
+            first = tmp1;
+            second = tmp2;
+        }
+    }
+};
+
+// Problem: Remove Nth Node From End of List
+// LeetCode: https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode*dummy = new ListNode(0,head);
+        ListNode* left = dummy;
+        ListNode* right = head;
+
+        while(n>0){
+            right = right->next;
+            n--;
+        }
+
+        while(right!=nullptr){
+            left = left->next;
+            right = right->next;
+        }
+
+        left->next = left->next->next;
+        return dummy->next;
+
+    }
+};
