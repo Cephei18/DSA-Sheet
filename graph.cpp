@@ -779,3 +779,25 @@ public:
         return false;
     }
 };
+
+
+// Problem: Lowest Common Ancestor of a Binary Search Tree
+// LeetCode: https://leetcode.com/problems/lowest-common-ancestor-of-a-binarysearch-tree/
+
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        TreeNode* cur = root;
+
+        while (cur) {
+            if (p->val > cur->val && q->val > cur->val) {
+                cur = cur->right;
+            } else if (p->val < cur->val && q->val < cur->val) {
+                cur = cur->left;
+            } else {
+                return cur;
+            }
+        }
+        return nullptr;
+    }
+};
