@@ -1008,3 +1008,43 @@ private:
         visit[r][c] = false;
     }
 };
+
+// Problem: Bipartite Graph
+// LeetCode: https://leetcode.com/problems/is-graph-bipartite/
+
+class Solution {
+public:
+    bool isBipartite(vector<vector<int>>& graph) {
+        int n = graph.size();
+        vector<int> color(n, -1);
+
+        for (int i = 0; i < n; ++i) {
+            if (color[i] == -1) {
+                if (!dfs(graph, i, 0, color)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    bool dfs(vector<vector<int>>& graph, int node, int c, vector<int>& color) {
+        if (color[node] != -1) {
+            return color[node] == c;
+        }
+
+        color[node] = c;
+
+        for (int nei : graph[node]) {
+            if (color[nei] == -1) {
+                if (!dfs(graph, nei, 1 - c, color)) {
+                    return false;
+                }
+            } else if (color[nei] == c) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+};
