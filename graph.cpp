@@ -1048,3 +1048,40 @@ public:
         return true;
     }
 };
+
+// Problem: Find Eventual Safe States
+// LeetCode: https://leetcode.com/problems/find-eventual-safe-states/
+
+class Solution {
+public:
+    bool dfs(vector<vector<int>>& graph, int node, vector<int>& color) {
+        if (color[node] != -1) {
+            return color[node] == 2; // return true only if already marked safe
+        }
+
+        color[node] = 1; // mark as visiting
+
+        for (int nei : graph[node]) {
+            if (!dfs(graph, nei, color)) {
+                return false; // found a cycle
+            }
+        }
+
+        color[node] = 2; // mark as safe
+        return true;
+    }
+
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        int n = graph.size();
+        vector<int> color(n, -1); // -1 = unvisited
+        vector<int> res;
+
+        for (int i = 0; i < n; i++) {
+            if (dfs(graph, i, color)) {
+                res.push_back(i); // safe node
+            }
+        }
+
+        return res;
+    }
+};
