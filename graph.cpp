@@ -1129,3 +1129,99 @@ public:
         return true;
     }
 };
+
+// Problem: Count Paths in a Grid
+// LeetCode: https://leetcode.com/problems/count-paths-in-a-grid/
+
+class Solution {
+public:
+    int countPaths(vector<vector<int>>& grid) {
+        int R = grid.size();
+        int C = grid[0].size();
+
+        if (grid[0][0] == 1 || grid[R-1][C-1] == 1) return 0; // blocked start/end
+
+        vector<vector<bool>> visited(R, vector<bool>(C, false));
+        int totalPaths = 0;
+
+        dfs(grid, 0, 0, visited, totalPaths);
+        return totalPaths;
+    }
+
+    void dfs(vector<vector<int>>& grid, int r, int c, vector<vector<bool>>& visited, int& totalPaths) {
+        int R = grid.size(), C = grid[0].size();
+
+        // Base cases
+        if (r < 0 || c < 0 || r >= R || c >= C || grid[r][c] == 1 || visited[r][c]) return;
+
+        // Reached destination
+        if (r == R-1 && c == C-1) {
+            totalPaths++;
+            return;
+        }
+
+        visited[r][c] = true;
+
+        int dir[4][2] = {{1,0},{0,1},{-1,0},{0,-1}};
+        for (int i = 0; i < 4; i++) {
+            int newR = r + dir[i][0];
+            int newC = c + dir[i][1];
+            dfs(grid, newR, newC, visited, totalPaths);
+        }
+
+        visited[r][c] = false; // backtrack
+    }
+};
+
+// Problem: BFS Traversal
+// LeetCode: https://leetcode.com/problems/bfs-traversal/
+
+
+int BFS(vector<vector<int>>& grid, int startR, int startC) {
+    int R = grid.size();           // Number of rows
+    int C = grid[0].size();        // Number of columns
+
+    // Queue to store the cells we need to explore next
+    queue<pair<int, int>> q;
+
+    // Visited matrix to avoid revisiting the same cell
+    vector<vector<bool>> visited(R, vector<bool>(C, false));
+
+    // Start from the given cell
+    q.push({startR, startC});
+    visited[startR][startC] = true;
+
+    // Direction vectors: down, up, right, left
+    int dir[4][2] = {
+        {1, 0},   // down
+        {-1, 0},  // up
+        {0, 1},   // right
+        {0, -1}   // left
+    };
+
+    // While there are still cells to explore
+    while (!q.empty()) {
+        // Get the front cell and remove it from queue
+        auto [r, c] = q.front(); 
+        q.pop();
+
+        // You can perform some action here, like counting steps or checking condition
+
+        // Explore all 4 directions
+        for (int i = 0; i < 4; ++i) {
+            int nr = r + dir[i][0];  // new row
+            int nc = c + dir[i][1];  // new column
+
+            // Check boundaries and whether the cell is already visited or blocked
+            if (nr >= 0 && nc >= 0 && nr < R && nc < C &&
+                !visited[nr][nc] && grid[nr][nc] == 0) {
+
+                // Mark new cell as visited and add to queue
+                visited[nr][nc] = true;
+                q.push({nr, nc});
+            }
+        }
+    }
+
+    return 1; // Change based on what the problem wants (e.g. steps, bool, count, etc.)
+}
