@@ -1085,3 +1085,47 @@ public:
         return res;
     }
 };
+
+// Problem: Course Schedule
+// LeetCode: https://leetcode.com/problems/course-schedule/
+
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> graph(numCourses);  // adjacency list
+
+        // Build the graph
+        for (auto& pre : prerequisites) {
+            int course = pre[0];
+            int prereq = pre[1];
+            graph[prereq].push_back(course);  // prereq → course
+        }
+
+        vector<int> color(numCourses, -1);  // -1 = unvisited, 1 = visiting, 2 = safe
+
+        for (int i = 0; i < numCourses; ++i) {
+            if (!dfs(i, graph, color)) {
+                return false;  // cycle found
+            }
+        }
+
+        return true;  // no cycles → all courses can be finished
+    }
+
+    bool dfs(int node, vector<vector<int>>& graph, vector<int>& color) {
+        if (color[node] != -1) {
+            return color[node] == 2;  // already visited → return whether it's safe
+        }
+
+        color[node] = 1;  // mark as visiting
+
+        for (int nei : graph[node]) {
+            if (!dfs(nei, graph, color)) {
+                return false;  // cycle detected
+            }
+        }
+
+        color[node] = 2;  // mark as safe
+        return true;
+    }
+};
