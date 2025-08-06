@@ -608,3 +608,40 @@ public:
         }
     }
 };
+
+// Problem: Count Palindrome Subsets
+// LeetCode: https://leetcode.com/problems/count-palindrome-subsets/
+
+class Solution {
+public:
+    int countPalindromeSubsets(vector<string>& strs) {
+        int n = strs.size();
+        int total = 1 << n; // total number of subsets
+        int count = 0;
+
+        for (int mask = 1; mask < total; ++mask) {
+            vector<int> freq(26, 0);
+
+            // Build the subset based on current mask
+            for (int i = 0; i < n; ++i) {
+                if (mask & (1 << i)) {
+                    for (char c : strs[i]) {
+                        freq[c - 'a']++;
+                    }
+                }
+            }
+
+            // Check if this subset can be rearranged into a palindrome
+            int odd = 0;
+            for (int f : freq) {
+                if (f % 2 != 0) odd++;
+            }
+
+            if (odd <= 1) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+};
