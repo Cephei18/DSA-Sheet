@@ -674,3 +674,37 @@ public:
     }
 };
   
+// Problem: Combination Sum
+// LeetCode: https://leetcode.com/problems/combination-sum/
+
+class Solution {
+public:
+
+    vector<vector<int>>res;
+
+    vector<vector<int>> combinationSum(vector<int>& nums, int target) {
+        res.clear();
+        vector<int>path;
+        dfs(nums,0,path,target);
+        return res;
+    }
+
+    void dfs(vector<int>& nums,int start, vector<int>& path,int target){
+     
+         if(target==0){
+                res.push_back(path);
+                return;
+            }
+
+            if(target<0){
+                return;
+            }
+
+        for(int i=start;i<nums.size();++i){
+            path.push_back(nums[i]);
+            dfs(nums,i,path,target-nums[i]);
+            path.pop_back();
+        }
+        
+    }
+};
