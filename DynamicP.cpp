@@ -708,3 +708,79 @@ public:
         
     }
 };
+
+// Problem: Combination Sum II
+// LeetCode: https://leetcode.com/problems/combination-sum-ii/
+
+class Solution {
+    vector<vector<int>> res;
+
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<int> path;
+        res.clear();
+        sort(candidates.begin(), candidates.end());
+        dfs(candidates, 0, path, target);
+        return res;
+    }
+
+    void dfs(vector<int>& candidates, int start, vector<int>& path, int target) {
+        if (target == 0) {
+            res.push_back(path);
+            return;
+        }
+        if (target < 0) {
+            return;
+        }
+
+        for (int i = start; i < candidates.size(); ++i) {
+            // Skip duplicates
+            if (i > start && candidates[i] == candidates[i - 1]) continue;
+
+            path.push_back(candidates[i]);
+            dfs(candidates, i + 1, path, target - candidates[i]); // Move to next index
+            path.pop_back();
+        }
+    }
+};
+
+// Problem: Permutations
+// LeetCode: https://leetcode.com/problems/permutations/
+
+class Solution {
+
+    vector<vector<int>>res;
+
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<int> path;
+        res.clear();
+        vector<bool>visited(nums.size(),false);
+        dfs(nums,path,visited);;
+        return res;
+    }
+
+    void dfs(vector<int>& nums,
+    vector<int>& path,vector<bool>& visited){
+
+        if(path.size()==nums.size()){
+            res.push_back(path);
+            return;
+        }
+
+        for(int i=0;i<nums.size();++i){
+
+            if(visited[i]) continue;
+
+            visited[i] = true;
+
+            path.push_back(nums[i]);
+            dfs(nums,path,visited);
+            path.pop_back();
+
+            visited[i] = false;
+
+        }
+
+    }
+};
