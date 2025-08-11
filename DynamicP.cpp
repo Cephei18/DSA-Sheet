@@ -814,3 +814,43 @@ public:
 
     }
 };
+
+// Problem: Palindrome Partitioning
+// LeetCode: https://leetcode.com/problems/palindrome-partitioning/
+
+class Solution {
+
+    vector<vector<string>>res;
+
+public:
+    vector<vector<string>> partition(string s) {
+        vector<string>path;
+        res.clear();
+        dfs(s,0,path);
+        return res;
+    }
+
+    void dfs(string& s, int start, vector<string>& path){
+        if(start == s.size()){
+            res.push_back(path);
+            return;
+        }
+
+        for(int i=start;i<s.size();i++){
+            if(is_palindrome(s,start,i)){
+                path.push_back(s.substr(start, i - start + 1));
+            dfs(s,i+1,path);
+            path.pop_back();
+            }
+        }
+    }
+    bool is_palindrome(const string& s, int l, int r) {
+    while (l < r) {
+        if (s[l] != s[r]) return false;
+        l++;
+        r--;
+    }
+    return true;
+}
+
+};
