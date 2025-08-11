@@ -854,3 +854,34 @@ public:
 }
 
 };
+
+// Letter Combinations of a Phone Number
+// LeetCode: https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+
+class Solution {
+    vector<string> res;
+    vector<string> digitToChar = {
+        "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
+    };
+
+    void dfs(string& digits, int start, string& path) {
+        if (start == digits.size()) {
+            res.push_back(path);
+            return;
+        }
+        string letters = digitToChar[digits[start] - '0'];
+        for (char ch : letters) {
+            path.push_back(ch);
+            dfs(digits, start + 1, path);
+            path.pop_back();
+        }
+    }
+
+public:
+    vector<string> letterCombinations(string digits) {
+        if (digits.empty()) return {};
+        string path;
+        dfs(digits, 0, path);
+        return res;
+    }
+};
