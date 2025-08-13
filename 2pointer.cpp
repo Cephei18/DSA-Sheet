@@ -507,3 +507,23 @@ public:
         return ans;
     }
 };
+
+// Best Time to Buy and Sell Stock
+// LeetCode: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int maxprofit = 0;
+        int l = 0; // buy day
+
+        for (int r = 1; r < prices.size(); r++) {
+            if (prices[r] < prices[l]) {
+                l = r; // found cheaper buy day
+            } else {
+                maxprofit = max(maxprofit, prices[r] - prices[l]);
+            }
+        }
+        return maxprofit;
+    }
+};
