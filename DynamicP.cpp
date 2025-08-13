@@ -928,3 +928,24 @@ public:
         }
     }
 };
+
+// Climbing Stairs
+// LeetCode: https://leetcode.com/problems/climbing-stairs/
+
+class Solution {
+public:
+    int climbStairs(int n) {
+        vector<int>mem(n+1,-1);
+       return dfs(n,mem);
+    }
+
+    int dfs(int n, vector<int>& mem){
+        if(n==0 || n==1) return 1;
+
+        if(mem[n]!=-1) return mem[n];
+
+        mem[n] = dfs(n-1,mem) + dfs(n-2,mem);
+
+        return mem[n];
+    }
+};
