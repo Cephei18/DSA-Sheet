@@ -527,3 +527,30 @@ public:
         return maxprofit;
     }
 };
+
+// Problem: Number of Subarrays of Size K and Average Greater than or Equal to Threshold
+// LeetCode: https://leetcode.com/problems/number-of-subarrays-of-size-k-and-average-greater-than-or-equal-to-threshold/
+
+class Solution {
+public:
+    int numOfSubarrays(vector<int>& arr, int k, int threshold) {
+        int n = arr.size();
+        int ans = 0;
+        int sum = 0;
+
+        // First window
+        for (int i = 0; i < k; i++) {
+            sum += arr[i];
+        }
+        if (sum / k >= threshold) ans++;
+
+        // Slide the window
+        for (int i = k; i < n; i++) {
+            sum += arr[i];        // add new element
+            sum -= arr[i - k];    // remove leftmost
+            if (sum / k >= threshold) ans++;
+        }
+
+        return ans;
+    }
+};
