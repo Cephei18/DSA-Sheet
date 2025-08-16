@@ -299,3 +299,32 @@ public:
         return maxHeap.empty() ? 0: maxHeap.top();
     }
 };
+
+// Problem: K Closest Points to Origin
+// LeetCode: https://leetcode.com/problems/k-closest-points-to-origin/
+
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+        // max-heap: store {distance, {x,y}}
+        priority_queue<pair<int, vector<int>>> pq;
+
+        for (auto& point : points) {
+            int x = point[0], y = point[1];
+            int dist = x*x + y*y;
+            pq.push({dist, point});
+
+            if (pq.size() > k) {
+                pq.pop(); // remove farthest point
+            }
+        }
+
+        // collect results
+        vector<vector<int>> result;
+        while (!pq.empty()) {
+            result.push_back(pq.top().second);
+            pq.pop();
+        }
+        return result;
+    }
+};
