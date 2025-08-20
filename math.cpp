@@ -338,3 +338,33 @@ public:
         dfs(col, row - 1, r, c, dc, -dr, matrix, res);
     }
 };
+
+// Problem: Merge Intervals
+// LeetCode: https://leetcode.com/problems/merge-intervals/
+
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end());  // sort by start
+        vector<vector<int>> res;
+
+        int n = intervals.size();
+        // take the first interval as the current one
+        vector<int> curr = intervals[0];
+
+        for (int i = 1; i < n; i++) {
+            if (curr[1] >= intervals[i][0]) {
+                // merge with current
+                curr[1] = max(curr[1], intervals[i][1]);
+            } else {
+                // no overlap, push curr and move to next
+                res.push_back(curr);
+                curr = intervals[i];
+            }
+        }
+        // push the last interval
+        res.push_back(curr);
+
+        return res;
+    }
+};
