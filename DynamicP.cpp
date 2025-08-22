@@ -1100,3 +1100,29 @@ public:
         return LIS;
     }
 };
+
+
+// Maximum Sum Increasing Subsequence
+// LeetCode: https://leetcode.com/problems/maximum-sum-increasing-subsequence/
+
+class Solution {
+public:
+    int maxSumIS(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> dp(n);
+        dp[0] = arr[0];
+        int maxSum = dp[0];
+
+        for (int i = 1; i < n; i++) {
+            dp[i] = arr[i];
+            for (int j = 0; j < i; j++) {
+                if (arr[i] > arr[j]) {
+                    dp[i] = max(dp[i], dp[j] + arr[i]);
+                }
+            }
+            maxSum = max(maxSum, dp[i]);
+        }
+
+        return maxSum;
+    }
+};
