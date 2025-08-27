@@ -1153,3 +1153,27 @@ public:
         return dp[n][m];
     }
 };
+
+// Memoization
+
+int solve(int day, int last, vector<vector<int>>& points) {
+    // Base case: day 0
+    if (day == 0) {
+        int maxi = 0;
+        for (int task = 0; task < 3; task++) {
+            if (task != last) {
+                maxi = max(maxi, points[0][task]);
+            }
+        }
+        return maxi;
+    }
+
+    int maxi = 0;
+    for (int task = 0; task < 3; task++) {
+        if (task != last) {
+            int merit = points[day][task] + solve(day-1, task, points);
+            maxi = max(maxi, merit);
+        }
+    }
+    return maxi;
+}
