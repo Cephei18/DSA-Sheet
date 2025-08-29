@@ -1240,3 +1240,47 @@ public:
         return dp[m-1][n-1];
     }
 };
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    int R, C;
+    vector<vector<int>> grid;
+    vector<vector<vector<int>>> dp;
+
+    int dfs(int i, int j1, int j2) {
+        // Out of bounds
+        if (j1 < 0 || j1 >= C || j2 < 0 || j2 >= C) return -1e9;
+
+        // Last row
+        if (i == R - 1) {
+            if (j1 == j2) return grid[i][j1];
+            return grid[i][j1] + grid[i][j2];
+        }
+
+        if (dp[i][j1][j2] != -1) return dp[i][j1][j2];
+
+        int result = (j1 == j2 ? grid[i][j1] : grid[i][j1] + grid[i][j2]);
+
+        int best = -1e9;
+        for (int d1 = -1; d1 <= 1; d1++) {
+            for (int d2 = -1; d2 <= 1; d2++) {
+                best = max(best, dfs(i + 1, j1 + d1, j2 + d2));
+            }
+        }
+
+        return dp[i][j1][j2] = result + best;
+    }
+
+    int maxChocolates(vector<vector<int>>& g) {
+        grid = g;
+        R = grid.size();
+        C = grid[0].size();
+        dp.assign(R, vector<vector<int>>(C, vector<int>(C, -1)));
+
+        return dfs(0, 0, C - 1);
+    }
+};
