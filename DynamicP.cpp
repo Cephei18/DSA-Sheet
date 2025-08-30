@@ -1284,3 +1284,29 @@ public:
         return dfs(0, 0, C - 1);
     }
 };
+
+
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int n = nums.size();
+        int total = accumulate(nums.begin(), nums.end(), 0);
+
+        // If total sum is odd, can't partition equally
+        if (total % 2 != 0) return false;
+        int target = total / 2;
+
+        // dp[t] = can we make sum t?
+        vector<bool> dp(target + 1, false);
+        dp[0] = true; // base case: sum 0 is always possible
+
+        for (int num : nums) {
+            // Traverse backwards to avoid using same num twice
+            for (int t = target; t >= num; t--) {
+                dp[t] = dp[t] || dp[t - num];
+            }
+        }
+
+        return dp[target];
+    }
+};
