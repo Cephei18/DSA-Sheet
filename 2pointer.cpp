@@ -845,3 +845,35 @@ int singleNonDuplicate(vector<int>& nums) {
     return nums[low]; // low == high, points to single element
 }
 };
+
+
+class Solution {
+public:
+    int findKRotation(vector<int> &nums) {
+        int n = nums.size();
+        int low = 0, high = n - 1;
+
+        while (low < high) {
+            int mid = (low + high) / 2;
+
+            // If mid element is greater than next, next is the pivot
+            if (mid < high && nums[mid] > nums[mid + 1]) {
+                return mid + 1;
+            }
+            // If mid element is smaller than previous, mid is the pivot
+            if (mid > low && nums[mid] < nums[mid - 1]) {
+                return mid;
+            }
+
+            // If right half is sorted, pivot is in left half
+            if (nums[mid] <= nums[high]) {
+                high = mid - 1;
+            }
+            // Otherwise pivot is in right half
+            else {
+                low = mid + 1;
+            }
+        }
+        return 0; // no rotation
+    }
+};
