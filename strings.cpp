@@ -32,3 +32,28 @@ public:
         return res;
     }
 };
+
+
+class Solution {
+public:
+    string countAndSay(int n) {
+    string s = "1";  // base case
+    for (int i = 2; i <= n; i++) {
+        string result = "";
+        int count = 1;
+        for (int j = 1; j < s.size(); j++) {
+            if (s[j] == s[j - 1]) {
+                count++;  // same digit → increase count
+            } else {
+                // different digit → append "count + digit"
+                result += to_string(count) + s[j - 1];
+                count = 1;  // reset count
+            }
+        }
+        // append the last run
+        result += to_string(count) + s.back();
+        s = result;
+    }
+    return s;
+}
+};
