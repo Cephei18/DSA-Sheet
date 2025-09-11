@@ -57,3 +57,34 @@ public:
     return s;
 }
 };
+
+
+class Solution {
+public:
+    string shortestPalindrome(string s) {
+        string rev = s;
+        reverse(rev.begin(), rev.end());
+        
+        // Combine string with a separator to avoid overlap confusion
+        string combined = s + "#" + rev;
+        
+        // Build prefix function (KMP table)
+        vector<int> lps(combined.size(), 0);
+        for (int i = 1; i < combined.size(); i++) {
+            int len = lps[i - 1];
+            while (len > 0 && combined[i] != combined[len]) {
+                len = lps[len - 1];
+            }
+            if (combined[i] == combined[len]) {
+                len++;
+            }
+            lps[i] = len;
+        }
+        
+        // lps.back() gives length of longest palindrome prefix
+        int longestPrefix = lps.back();
+        
+        string toAdd = rev.substr(0, s.size() - longestPrefix);
+        return toAdd + s;
+    }
+};
