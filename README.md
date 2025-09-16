@@ -1,4 +1,3 @@
-// Some difficulties I'm facing
 
 git add .
 git commit -m "Add existing DSA tracker files"
