@@ -1286,3 +1286,44 @@ public:
 };
 
 
+class Solution {
+public:
+    int getCnt(vector<int>&bloomDay,int mid,int k){
+        int cnt=0,adj=0;
+        for(int i=0;i<bloomDay.size();i++){
+            if(bloomDay[i]<=mid){
+                adj++;
+                if(adj==k){
+                    cnt++;
+                    adj=0;
+                }
+            }
+            else{
+                adj=0;
+            }
+        }
+        return cnt;
+    }
+
+    int minDays(vector<int>& bloomDay, int m, int k) {
+        int n=bloomDay.size();
+        if(k>n) return -1;
+        int maxDay=*max_element(bloomDay.begin(),bloomDay.end());
+        int s=1;
+        int e=maxDay;
+        int ans=INT_MAX;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            int cnt=getCnt(bloomDay,mid,k);
+
+            if(cnt>=m){
+                ans=min(ans,mid);
+                e=mid-1;
+            }
+            else{
+                s=mid+1;
+            }
+        }
+        return ans==INT_MAX? -1:ans;
+    }
+};
